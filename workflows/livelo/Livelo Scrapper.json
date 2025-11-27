@@ -1,0 +1,222 @@
+{
+  "name": "Livelo Scrapper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a3877bda-5d31-4c57-beaa-77d57c7dfc93",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.livelo.com.br/juntar-pontos/todos-os-parceiros",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "pt-BR, en;q=0.9, *;q=0.8"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "923bc376-bb2c-4cfd-a263-35a12d35eb0a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "body",
+              "cssSelector": "html"
+            }
+          ]
+        },
+        "options": {
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6d00b468-a026-4ca1-862c-7b7a0d639cb8",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "if ($input.item.json.body) {\n    $input.item.json.content = $input.item.json.body\n      // Remove <style>, <script>, and other head-like content blocks\n      .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '')\n      .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '')\n      .replace(/<noscript[^>]*>[\\s\\S]*?<\\/noscript>/gi, '')\n      .replace(/<!--[\\s\\S]*?-->/g, '') // HTML comments\n\n      // Remove common non-content elements\n      .replace(/<nav[^>]*>[\\s\\S]*?<\\/nav>/gi, '')\n      .replace(/<header[^>]*>[\\s\\S]*?<\\/header>/gi, '')\n      .replace(/<footer[^>]*>[\\s\\S]*?<\\/footer>/gi, '')\n      .replace(/<aside[^>]*>[\\s\\S]*?<\\/aside>/gi, '')\n\n      // Convert common HTML entities before removing tags\n      .replace(/&nbsp;/g, ' ')\n      .replace(/&amp;/g, '&')\n      .replace(/&lt;/g, '<')\n      .replace(/&gt;/g, '>')\n      .replace(/&quot;/g, '\"')\n      .replace(/&#39;/g, \"'\")\n      .replace(/&mdash;/g, '_')\n      .replace(/&ndash;/g, '_')\n\n      // Remove all HTML tags but preserve line breaks for paragraphs\n      .replace(/<\\/?(p|div|br|h[1-6])[^>]*>/gi, '\\n')\n      .replace(/<[^<]+?>/g, '')\n\n      // Remove CSS or JS snippets\n      .replace(/(?:\\.([\\w-]+|#[\\w-]+)?\\s*\\{[^}]*\\})/g, '')             // CSS rules\n      .replace(/function\\s+\\w+\\s*\\([^)]*\\)\\s*\\{[^}]+\\}/g, '')          // JS functions\n      .replace(/var\\s+\\w+\\s*=[\\s\\S]*?;/g, '')                         // Variable declarations\n\n      // Remove UI junk and boilerplate content phrases\n      .replace(/\\b(Subscribe|Newsletter|Book a (call|meeting)|Leave a Reply|Cancel Reply|Login|Logout|Sign\\s?up|Sign\\s?in|Your Name|Email Address|Website|Privacy Policy|Terms (of Service|& Conditions)|Close Menu|Skip to (main )?content|Back to top|Search|Menu|Share|Tweet|Pin|Read More|Continue Reading|Related Posts?|Tags?:|Categories?:)\\b/gi, '')\n\n      // Remove social and footer keywords\n      .replace(/\\b(Facebook|Twitter|LinkedIn|Instagram|YouTube|TikTok|© \\d{4} [\\w\\s.]+|All Rights Reserved)\\b/gi, '')\n\n      // Remove navigation and pagination text\n      .replace(/\\b(Next|Previous|Page \\d+( of \\d+)?|Home|About|Contact|Blog)\\b/gi, '')\n\n      // Remove common Medium-specific elements\n      .replace(/\\b(clap|responses?|follow|member-only story|this story is published in|get the medium app)\\b/gi, '')\n\n      // Clean up whitespace and formatting\n      .replace(/\\r?\\n|\\r/g, ' ')              // Remove all newlines first\n      .replace(/\\s{2,}/g, ' ')                // Collapse multiple spaces\n      .replace(/\\s+([.!?])/g, '$1')           // Remove space before punctuation\n      .trim();\n\n    // Optional: Set a minimum content length filter\n    if ($input.item.json.content.length < 50) {\n      $input.item.json.content = \"Content too short or unable to extract meaningful text\";\n    }\n\n    // Optional: Add word count\n    $input.item.json.wordCount = $input.item.json.content.split(/\\s+/).filter(word => word.length > 0).length;\n}\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "f0b0fa8f-06f7-4d2e-9d5d-929b2f8f5d40",
+      "name": "Clean HTML"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const content = $input.item.json.content;\n\nconst regex = /([^\\[\\]\\n]+?)\\s*\\[[^\\[\\]]+\\]Até\\s*(\\d+)pontospor R\\$/g;\nlet match;\nlet results = [];\n\nwhile ((match = regex.exec(content)) !== null) {\n  let company = match[1].trim();\n\n  // Remove common unwanted prefixes\n  company = company.replace(/^(NovidadesPromoçãoLogo|PromoçãoLogo|Logo)\\s*/i, '');\n\n  // Split company into words, handle cases where there are multiple spaces\n  const words = company.split(/\\s+/);\n\n  if (words.length > 5) {\n    company = words.slice(-3).join(' ');\n  }\n  \n  const points = parseInt(match[2], 10);\n  results.push({ company, points });\n}\n\n// SORT: By points, decreasing order\nresults.sort((a, b) => b.points - a.points);\n\n$input.item.json.companiesAndPoints = { results };\nreturn $input.item.json.companiesAndPoints;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "e97b5608-7d13-4fdc-a47e-ebb6c3f93509",
+      "name": "Extract Livelo Partners"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $input.first().json.results;\n\n// Get today's date in dd/mm/YYYY\nconst today = new Date();\nconst dd = String(today.getDate()).padStart(2, '0');\nconst mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!\nconst yyyy = today.getFullYear();\nconst dateStr = `${dd}/${mm}/${yyyy}`;\n\n// Prepare formatted message\nlet message = `Empresas que tão mais pagando na LIVELO (${dateStr})\\n\\n`;\nresults.forEach((entry, idx) => { //.slice(0, 60)\n  message += `${idx + 1}. ${entry.company}: ${entry.points} pts/R$\\n`;\n});\n\nreturn {data: message.trim()};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "8ac8d9fd-41b8-4805-b07a-77a646f17a68",
+      "name": "Create message text"
+    },
+    {
+      "parameters": {
+        "chatId": "1226319359",
+        "text": "={{ $json.data }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "dce96b03-7f8f-4d84-ba4a-69e4b1a7eff9",
+      "name": "Send a text message",
+      "webhookId": "0688e3b9-4e3c-41ec-9c4b-6c99d6ba7b10",
+      "credentials": {
+        "telegramApi": {
+          "id": "8rcE3D0O4Udd2qv7",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Clean HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean HTML": {
+      "main": [
+        [
+          {
+            "node": "Extract Livelo Partners",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Livelo Partners": {
+      "main": [
+        [
+          {
+            "node": "Create message text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create message text": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "availableInMCP": false
+  },
+  "versionId": "42f0b7ec-d063-4aed-b270-d2c0529c933f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "149e441531d53dd6afec8387bdebe91fbf5209e6865bb20f7cb8ec214b8f7080"
+  },
+  "id": "Bu1npVhIIst0pB1g",
+  "tags": []
+}
