@@ -17,7 +17,7 @@
         0,
         0
       ],
-      "id": "a3877bda-5d31-4c57-beaa-77d57c7dfc93",
+      "id": "2bc2c3f8-dfa0-4f08-8a8e-060650b7ae4c",
       "name": "Schedule Trigger"
     },
     {
@@ -44,7 +44,7 @@
         208,
         0
       ],
-      "id": "923bc376-bb2c-4cfd-a263-35a12d35eb0a",
+      "id": "fd312aa5-39b2-4e8f-845f-30f74f726890",
       "name": "HTTP Request"
     },
     {
@@ -68,7 +68,7 @@
         416,
         0
       ],
-      "id": "6d00b468-a026-4ca1-862c-7b7a0d639cb8",
+      "id": "5e18cd39-0cc6-4272-b2fa-8a8bb2467e7a",
       "name": "HTML"
     },
     {
@@ -82,7 +82,7 @@
         624,
         0
       ],
-      "id": "f0b0fa8f-06f7-4d2e-9d5d-929b2f8f5d40",
+      "id": "860aa5ac-bb1a-4a08-a933-620984fa5f97",
       "name": "Clean HTML"
     },
     {
@@ -96,12 +96,12 @@
         832,
         0
       ],
-      "id": "e97b5608-7d13-4fdc-a47e-ebb6c3f93509",
+      "id": "b08b66bf-ec02-4f17-976e-973b936bf2a6",
       "name": "Extract Livelo Partners"
     },
     {
       "parameters": {
-        "jsCode": "const results = $input.first().json.results;\n\n// Get today's date in dd/mm/YYYY\nconst today = new Date();\nconst dd = String(today.getDate()).padStart(2, '0');\nconst mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!\nconst yyyy = today.getFullYear();\nconst dateStr = `${dd}/${mm}/${yyyy}`;\n\n// Prepare formatted message\nlet message = `Empresas que tão mais pagando na LIVELO (${dateStr})\\n\\n`;\nresults.forEach((entry, idx) => { //.slice(0, 60)\n  message += `${idx + 1}. ${entry.company}: ${entry.points} pts/R$\\n`;\n});\n\nreturn {data: message.trim()};"
+        "jsCode": "const results = $input.first().json.results;\n\n// Get today's date in dd/mm/YYYY\nconst today = new Date();\nconst dd = String(today.getDate()).padStart(2, '0');\nconst mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!\nconst yyyy = today.getFullYear();\nconst dateStr = `${dd}/${mm}/${yyyy}`;\n\n// Prepare formatted message\nlet message = `*Empresas que tão mais pagando na LIVELO* (${dateStr})\\n\\n`;\nresults.forEach((entry, idx) => { //.slice(0, 60)\n  message += `${idx + 1}. *${entry.company}*: _${entry.points} pts/R$_\\n`;\n});\n\nreturn {data: message.trim()};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -109,14 +109,17 @@
         1040,
         0
       ],
-      "id": "8ac8d9fd-41b8-4805-b07a-77a646f17a68",
+      "id": "345ff022-b977-4a0a-8e7e-71c4df8a2416",
       "name": "Create message text"
     },
     {
       "parameters": {
         "chatId": "1226319359",
         "text": "={{ $json.data }}",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -124,13 +127,13 @@
         1248,
         0
       ],
-      "id": "dce96b03-7f8f-4d84-ba4a-69e4b1a7eff9",
+      "id": "2eae3787-6d94-4cb4-aa88-206395f27c6d",
       "name": "Send a text message",
       "webhookId": "0688e3b9-4e3c-41ec-9c4b-6c99d6ba7b10",
       "credentials": {
         "telegramApi": {
-          "id": "8rcE3D0O4Udd2qv7",
-          "name": "Telegram account"
+          "id": "EO607fRQh30CzDQN",
+          "name": "Telegram Livelo"
         }
       }
     }
@@ -204,19 +207,19 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "timezone": "America/Sao_Paulo",
     "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "pftiJxONmWBep93h"
   },
-  "versionId": "42f0b7ec-d063-4aed-b270-d2c0529c933f",
+  "versionId": "2a9a6763-6cda-40e8-a988-98c266f1f112",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "149e441531d53dd6afec8387bdebe91fbf5209e6865bb20f7cb8ec214b8f7080"
+    "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
   },
-  "id": "Bu1npVhIIst0pB1g",
+  "id": "NkuKvlbMo5WHdd8L",
   "tags": []
 }

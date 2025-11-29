@@ -1,0 +1,66 @@
+{
+  "name": "Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d79d31b8-5e2f-4c8a-ae0c-2a6c33dc5ae0",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "1226319359",
+        "text": "=*❗ Falha no Workflow*\n\n*Workflow:* `{{$json[\"workflow\"][\"name\"]}}`  \n*ID:* `{{$json[\"workflow\"][\"id\"]}}`\n\nO workflow apresentou um erro e foi interrompido.  \nVerifique logs, credenciais e configurações. Resolva a causa raiz antes de reexecutar.\n\nSe precisar retentar manualmente, faça isso apenas após corrigir o problema.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3d1f242e-abbc-4e8c-a894-ad424a01dbbc",
+      "name": "Send a text message",
+      "webhookId": "8b05608d-e742-406d-b5c1-9a4fe74c9160",
+      "credentials": {
+        "telegramApi": {
+          "id": "fGiSctbCMK27BnJk",
+          "name": "Telegram Orchestrator"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3236adbf-6410-43d9-81c3-e9d4d19ccff5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
+  },
+  "id": "pftiJxONmWBep93h",
+  "tags": []
+}
