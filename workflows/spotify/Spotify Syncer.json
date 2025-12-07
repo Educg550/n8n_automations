@@ -18,21 +18,10 @@
       "name": "Compare the two Datasets",
       "type": "n8n-nodes-base.compareDatasets",
       "position": [
-        2160,
+        2368,
         64
       ],
       "typeVersion": 2.3
-    },
-    {
-      "parameters": {},
-      "id": "172fcf11-bbd5-497f-9148-c073d8a0dffe",
-      "name": "When clicking ‘Test workflow’",
-      "type": "n8n-nodes-base.manualTrigger",
-      "position": [
-        528,
-        208
-      ],
-      "typeVersion": 1
     },
     {
       "parameters": {
@@ -44,8 +33,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -112,
-        -112
+        -512,
+        -32
       ],
       "typeVersion": 1
     },
@@ -153,8 +142,8 @@
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        1536,
-        64
+        1600,
+        48
       ],
       "id": "a9724e70-37e5-4733-8ce0-b2a256da67b1",
       "name": "Get a playlist's tracks by URI or ID",
@@ -240,8 +229,8 @@
       "name": "Add tracks not already in Roleta Russa",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        2528,
-        -96
+        3168,
+        64
       ],
       "typeVersion": 1,
       "credentials": {
@@ -274,8 +263,8 @@
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        2528,
-        256
+        3168,
+        512
       ],
       "id": "550d75a5-ea21-4b5a-890f-b4def2cd5fd9",
       "name": "Remove an item from Roleta Russa",
@@ -293,7 +282,25 @@
             {
               "id": "957f3752-9c22-4112-a26b-279bae28d426",
               "name": "track.id",
-              "value": "={{ $json.track.id }}",
+              "value": "={{ $json.track.uri }}",
+              "type": "string"
+            },
+            {
+              "id": "7a12b849-d56e-443f-b38c-ae382fc04b01",
+              "name": "track.name",
+              "value": "={{ $json.track.name }}",
+              "type": "string"
+            },
+            {
+              "id": "e6e5796d-3382-41e4-8705-4be42ec80b2f",
+              "name": "track.artists[0].name",
+              "value": "={{ $json.track.artists[0].name }}",
+              "type": "string"
+            },
+            {
+              "id": "c3bdcff1-af0d-4c62-9410-16e93f354cca",
+              "name": "track.album.name",
+              "value": "={{ $json.track.album.name }}",
               "type": "string"
             }
           ]
@@ -316,7 +323,25 @@
             {
               "id": "0fec9175-c997-4214-821e-94d840fd1547",
               "name": "track.id",
-              "value": "={{ $json.track.id }}",
+              "value": "={{ $json.track.uri }}",
+              "type": "string"
+            },
+            {
+              "id": "8781bc6e-b620-4fdb-986e-fd576b932d06",
+              "name": "track.name",
+              "value": "={{ $json.track.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1e957dc1-3bce-4fcd-a511-1a83d609d713",
+              "name": "track.artists[0].name",
+              "value": "={{ $json.track.artists[0].name }}",
+              "type": "string"
+            },
+            {
+              "id": "24fce01e-6ce8-499e-8844-5a77698eab20",
+              "name": "track.album.name",
+              "value": "={{ $json.track.album.name }}",
               "type": "string"
             }
           ]
@@ -326,27 +351,16 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1712,
-        64
+        1776,
+        48
       ],
       "id": "13dd0666-bdb9-4aa0-82c7-d734cc6b1610",
       "name": "Extract Track ID1"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        2832,
-        80
-      ],
-      "id": "f7d35e14-3aed-4886-83e3-6d79876d3612",
-      "name": "Merge"
-    },
-    {
       "parameters": {
         "chatId": "1226319359",
-        "text": "Finalizei o Spotify sync!",
+        "text": "=Adicionadas {{ $('Loop Over Items1').all().length }} tracks",
         "additionalFields": {
           "appendAttribution": false,
           "parse_mode": "MarkdownV2"
@@ -355,18 +369,129 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3040,
-        80
+        3280,
+        -128
       ],
       "id": "eb6fc87e-cc33-4d38-bbe8-166bd0905632",
       "name": "Send a text message",
       "webhookId": "6c6d6765-ed75-462f-8053-a3b5f3f2b884",
+      "executeOnce": true,
       "credentials": {
         "telegramApi": {
           "id": "ZkFlWyDupkhZdr1q",
           "name": "Telegram Spotify"
         }
       }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2928,
+        -112
+      ],
+      "id": "4517b06d-ec4c-42fa-8e8a-79ec6e236b87",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2928,
+        320
+      ],
+      "id": "d007a4a8-c20c-4886-887d-390cf845055d",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "chatId": "1226319359",
+        "text": "=Removidas {{ $('Loop Over Items2').all().length }} tracks",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3280,
+        304
+      ],
+      "id": "0d7d87d1-a888-40c3-95bc-449a08e4ce34",
+      "name": "Send a text message1",
+      "webhookId": "6c6d6765-ed75-462f-8053-a3b5f3f2b884",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "ZkFlWyDupkhZdr1q",
+          "name": "Telegram Spotify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        96
+      ],
+      "id": "dd8db1fa-0599-427d-96fd-6095ef2db1a0",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "1226319359",
+        "text": "=*Spotify Sync*\n\nComeçando sincronização diária com a playlist:\n\n_Russian Roulette Revolution 🧶_",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        -272
+      ],
+      "id": "94744bba-ecf9-4a53-ba97-61df57ee98aa",
+      "name": "Send a text message2",
+      "webhookId": "6c6d6765-ed75-462f-8053-a3b5f3f2b884",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "ZkFlWyDupkhZdr1q",
+          "name": "Telegram Spotify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "track.id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1584,
+        -208
+      ],
+      "id": "18ba343f-dc2f-4899-8459-a100d2b75ae3",
+      "name": "Remove Duplicates"
     }
   ],
   "pinData": {},
@@ -375,7 +500,7 @@
       "main": [
         [
           {
-            "node": "Add tracks not already in Roleta Russa",
+            "node": "Loop Over Items1",
             "type": "main",
             "index": 0
           }
@@ -384,23 +509,7 @@
         [],
         [
           {
-            "node": "Remove an item from Roleta Russa",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When clicking ‘Test workflow’": {
-      "main": [
-        [
-          {
-            "node": "Get a user's playlists",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get Roleta Russa playlist's tracks by URI or ID",
+            "node": "Loop Over Items2",
             "type": "main",
             "index": 0
           }
@@ -466,7 +575,7 @@
       "main": [
         [
           {
-            "node": "Compare the two Datasets",
+            "node": "Remove Duplicates",
             "type": "main",
             "index": 0
           }
@@ -506,7 +615,7 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Loop Over Items1",
             "type": "main",
             "index": 0
           }
@@ -517,14 +626,19 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Loop Over Items2",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
     },
-    "Merge": {
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
+    "Loop Over Items1": {
       "main": [
         [
           {
@@ -532,15 +646,77 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Add tracks not already in Roleta Russa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Remove an item from Roleta Russa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get a user's playlists",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Roleta Russa playlist's tracks by URI or ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Compare the two Datasets",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "availableInMCP": false,
+    "errorWorkflow": "pftiJxONmWBep93h"
   },
-  "versionId": "be0d14f5-7f88-4d1c-a9cb-12ae0afaac1a",
+  "versionId": "94585b8b-8fc5-438e-ad2e-81c6ea34f25e",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
