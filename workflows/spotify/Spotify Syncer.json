@@ -238,7 +238,8 @@
           "id": "McmF6suUUb2xY8Re",
           "name": "Spotify account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -273,7 +274,8 @@
           "id": "McmF6suUUb2xY8Re",
           "name": "Spotify account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -439,7 +441,9 @@
       "parameters": {
         "rule": {
           "interval": [
-            {}
+            {
+              "triggerAtHour": 9
+            }
           ]
         }
       },
@@ -712,11 +716,10 @@
     "executionOrder": "v1",
     "timezone": "America/Sao_Paulo",
     "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
     "availableInMCP": false,
     "errorWorkflow": "pftiJxONmWBep93h"
   },
-  "versionId": "94585b8b-8fc5-438e-ad2e-81c6ea34f25e",
+  "versionId": "d27a9343-7327-499d-ba63-e9bf89e35d8d",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
