@@ -132,16 +132,6 @@
                 "type": "string",
                 "operation": "notEquals"
               }
-            },
-            {
-              "id": "ee19f386-8f20-4ba6-a775-12942dc46f54",
-              "leftValue": "={{ $json.id }}",
-              "rightValue": "fewafewf",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
             }
           ],
           "combinator": "and"
@@ -286,7 +276,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3296,
+        3184,
         -288
       ],
       "id": "dffe7334-820c-4796-a05e-00e1391cdeaa",
@@ -302,7 +292,6 @@
     },
     {
       "parameters": {
-        "batchSize": 100,
         "options": {
           "reset": false
         }
@@ -328,7 +317,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3280,
+        3184,
         592
       ],
       "id": "8f160bb0-8cc4-419b-9f1f-2d557180d4f7",
@@ -477,7 +466,6 @@
     },
     {
       "parameters": {
-        "batchSize": 100,
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
@@ -488,68 +476,6 @@
       ],
       "id": "3fdfdaba-ef8b-41fb-add0-e8bcaff9a777",
       "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
-        "method": "DELETE",
-        "url": "https://api.spotify.com/v1/playlists/3vfDCGaXYBMdQf2p112arJ/tracks",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "spotifyOAuth2Api",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ { tracks: $('Loop Over Items2').all().map(item => ({ uri: item.json.id })) } }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        3104,
-        720
-      ],
-      "id": "319478fc-da33-4451-836a-b53eb549023e",
-      "name": "Delete tracks from Roleta Russa",
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.spotify.com/v1/playlists/3vfDCGaXYBMdQf2p112arJ/tracks",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "spotifyOAuth2Api",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "uris",
-              "value": "={{ $('Loop Over Items1').all().map(item => item.json.id) }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        3088,
-        -144
-      ],
-      "id": "74b7e718-17c1-432e-af57-13a11d0a95bf",
-      "name": "Add tracks to Roleta Russa",
-      "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
-        }
-      }
     },
     {
       "parameters": {
@@ -659,9 +585,9 @@
     },
     {
       "parameters": {
-        "content": "## Adicionando músicas à Roleta Russa\nAqui estão as tracks que estão nas playlists de nicho, mas que não estão na Roleta Russa. Estamos fazendo uma request pura para juntar no body batches de 100 em 100 músicas por request e acelerar o processo de adição sem acionar rate-limits na API do Spotify",
+        "content": "## Adicionando músicas à Roleta Russa\nAqui estão as tracks que estão nas playlists de nicho, mas que não estão na Roleta Russa. As músicas são adicionadas uma por uma por limitações na API do Spotify (ocorre rate-limit quando tracks são adicionadas em batches)",
         "height": 528,
-        "width": 624,
+        "width": 560,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -675,9 +601,9 @@
     },
     {
       "parameters": {
-        "content": "## Removendo músicas da Roleta Russa\nAqui estão as tracks que NÃO estão mais nas playlists de nicho, mas que ainda estão na Roleta Russa. Também removemos em batches de 100 músicas",
-        "height": 480,
-        "width": 624,
+        "content": "## Removendo músicas da Roleta Russa\nAqui estão as tracks que NÃO estão mais nas playlists de nicho, mas que ainda estão na Roleta Russa. Também removemos as tracks uma a uma",
+        "height": 512,
+        "width": 560,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -825,41 +751,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "6c539517-69df-4128-9913-ff5ac1c24beb",
-              "leftValue": "={{ $('Compare the two Datasets').all().length }}",
-              "rightValue": 30,
-              "operator": {
-                "type": "number",
-                "operation": "gte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3024,
-        144
-      ],
-      "id": "65e3bf48-d63e-4eb4-8c09-cf904025ab5d",
-      "name": "If1",
-      "alwaysOutputData": true,
-      "executeOnce": true
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -901,44 +792,88 @@
     },
     {
       "parameters": {
-        "content": "## TODO\nTirar filtro daqui pra pegar todas playlists"
+        "resource": "playlist",
+        "id": "3vfDCGaXYBMdQf2p112arJ",
+        "trackID": "={{ $json.id }}",
+        "additionalFields": {}
       },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1072,
-        16
-      ],
+      "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
-      "id": "79234bde-98cd-4b69-9af8-79529fc87ac2",
-      "name": "Sticky Note7"
-    },
-    {
-      "parameters": {
-        "amount": 67
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
       "position": [
-        3280,
-        736
-      ],
-      "id": "7c225b25-ceed-426a-86e1-852dc709e909",
-      "name": "Wait",
-      "webhookId": "3231bbcf-aedc-475d-8ccd-dfcec044c0a6"
-    },
-    {
-      "parameters": {
-        "amount": 67
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3296,
+        3184,
         -144
       ],
-      "id": "e489b155-fe33-4357-8ac2-d3c8f55c23bd",
-      "name": "Wait1",
-      "webhookId": "f1733dd8-214c-4296-af99-26e14a3c178c"
+      "id": "1d4ab564-33b4-44fe-911b-188e7db32c12",
+      "name": "Add track to Roleta Russa",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5,
+      "credentials": {
+        "spotifyOAuth2Api": {
+          "id": "McmF6suUUb2xY8Re",
+          "name": "Spotify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlist",
+        "operation": "delete",
+        "id": "3vfDCGaXYBMdQf2p112arJ",
+        "trackID": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.spotify",
+      "typeVersion": 1,
+      "position": [
+        3184,
+        752
+      ],
+      "id": "4e7c6ed7-794c-4878-9b84-21ada2daea66",
+      "name": "Remove track to Roleta Russa",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5,
+      "credentials": {
+        "spotifyOAuth2Api": {
+          "id": "McmF6suUUb2xY8Re",
+          "name": "Spotify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6c539517-69df-4128-9913-ff5ac1c24beb",
+              "leftValue": "={{ $('Compare the two Datasets').all().length }}",
+              "rightValue": 30,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2960,
+        240
+      ],
+      "id": "65e3bf48-d63e-4eb4-8c09-cf904025ab5d",
+      "name": "If more than 30 tracks to delete",
+      "alwaysOutputData": true,
+      "executeOnce": true
     }
   ],
   "pinData": {},
@@ -956,7 +891,7 @@
         [],
         [
           {
-            "node": "If1",
+            "node": "If more than 30 tracks to delete",
             "type": "main",
             "index": 0
           },
@@ -1073,7 +1008,7 @@
         ],
         [
           {
-            "node": "Delete tracks from Roleta Russa",
+            "node": "Remove track to Roleta Russa",
             "type": "main",
             "index": 0
           }
@@ -1167,29 +1102,7 @@
         ],
         [
           {
-            "node": "Add tracks to Roleta Russa",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Delete tracks from Roleta Russa": {
-      "main": [
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Add tracks to Roleta Russa": {
-      "main": [
-        [
-          {
-            "node": "Wait1",
+            "node": "Add track to Roleta Russa",
             "type": "main",
             "index": 0
           }
@@ -1241,17 +1154,6 @@
         ]
       ]
     },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Send message and wait for response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Edit Fields": {
       "main": [
         [
@@ -1263,7 +1165,18 @@
         ]
       ]
     },
-    "Wait": {
+    "Add track to Roleta Russa": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove track to Roleta Russa": {
       "main": [
         [
           {
@@ -1274,11 +1187,11 @@
         ]
       ]
     },
-    "Wait1": {
+    "If more than 30 tracks to delete": {
       "main": [
         [
           {
-            "node": "Loop Over Items1",
+            "node": "Send message and wait for response",
             "type": "main",
             "index": 0
           }
@@ -1294,7 +1207,7 @@
     "availableInMCP": false,
     "errorWorkflow": "pftiJxONmWBep93h"
   },
-  "versionId": "e915556e-fd41-4044-b1af-17037c8e7115",
+  "versionId": "acb937b2-0f3b-4e80-a852-9cbd9403b8c4",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
