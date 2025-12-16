@@ -17,12 +17,12 @@
           "multipleMatches": "first"
         }
       },
-      "id": "2c891e6e-db07-4c64-9ed9-665bed2cb0fb",
+      "id": "bc2416cc-b5b7-422a-b946-98737a055748",
       "name": "Compare the two Datasets",
       "type": "n8n-nodes-base.compareDatasets",
       "position": [
-        2656,
-        112
+        32,
+        560
       ],
       "typeVersion": 2.3
     },
@@ -33,12 +33,12 @@
         "width": 540,
         "color": 5
       },
-      "id": "be11e7aa-b4b2-4f37-9689-ef703fc1fde8",
+      "id": "59858c57-762d-4945-9d49-f4743aa3010f",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -48
+        -2112,
+        400
       ],
       "typeVersion": 1
     },
@@ -51,16 +51,16 @@
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        768,
-        96
+        -2064,
+        544
       ],
-      "id": "22a4d24c-e04e-4c3a-a9b9-579ce56586bf",
+      "id": "c3c7c8e1-7618-41ad-9c59-960381bd0048",
       "name": "Get a user's playlists",
       "alwaysOutputData": false,
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
@@ -96,12 +96,12 @@
         },
         "options": {}
       },
-      "id": "5b99cbd5-a9e1-4908-bb96-24f044a9170f",
+      "id": "8e80b530-740b-4330-8337-278cac0ffafa",
       "name": "Extract user owned playlists",
       "type": "n8n-nodes-base.set",
       "position": [
-        944,
-        96
+        -1888,
+        544
       ],
       "typeVersion": 3.4
     },
@@ -118,7 +118,7 @@
             {
               "id": "e24a34f8-2222-4926-b0fe-56344f2e35e4",
               "leftValue": "={{ $json.owner.id }}",
-              "rightValue": "eduardo9cruz-br",
+              "rightValue": "31bx643axpef4x2mwoijfnjuid3y",
               "operator": {
                 "type": "string",
                 "operation": "equals"
@@ -127,7 +127,7 @@
             {
               "id": "a4b781f7-5921-431f-8841-6aa445a19279",
               "leftValue": "={{ $json.id }}",
-              "rightValue": "3vfDCGaXYBMdQf2p112arJ",
+              "rightValue": "2PNnDnyjkpFMCqW7qelgGz",
               "operator": {
                 "type": "string",
                 "operation": "notEquals"
@@ -141,31 +141,31 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        1120,
-        96
+        -1712,
+        544
       ],
-      "id": "d86d64ee-9bd2-4011-abef-539fe622d5a6",
+      "id": "b237b403-fc7b-4a5a-8ddf-8180a22ad16b",
       "name": "Fetch only user-as-owner playlists"
     },
     {
       "parameters": {
         "resource": "playlist",
         "operation": "getTracks",
-        "id": "3vfDCGaXYBMdQf2p112arJ",
+        "id": "2PNnDnyjkpFMCqW7qelgGz",
         "returnAll": true
       },
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        1264,
-        528
+        -1680,
+        976
       ],
-      "id": "c3456fe7-3ac5-4d25-8e3c-1fe9a07005b0",
+      "id": "71abe081-75b6-4c2a-b015-d5324bf0b096",
       "name": "Get Roleta Russa playlist's tracks by URI or ID",
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
@@ -176,10 +176,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1360,
-        96
+        -1472,
+        544
       ],
-      "id": "d1b6cc40-59e4-4ebc-b09e-aeeaa025fc0d",
+      "id": "2645c7a5-1eee-4140-b0b5-de53f66feb9c",
       "name": "Loop Over Items"
     },
     {
@@ -217,10 +217,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1472,
-        528
+        -1472,
+        976
       ],
-      "id": "4299137c-3666-49d0-9162-2f70eea2623e",
+      "id": "7cd09993-e03d-4f0a-a944-e027f7ee0384",
       "name": "Extract Track ID"
     },
     {
@@ -240,16 +240,16 @@
               "type": "string"
             },
             {
-              "id": "1e957dc1-3bce-4fcd-a511-1a83d609d713",
-              "name": "track.artists[0].name",
-              "value": "={{ $json.track.artists[0].name }}",
-              "type": "string"
-            },
-            {
               "id": "24fce01e-6ce8-499e-8844-5a77698eab20",
               "name": "track.album.name",
               "value": "={{ $json.track.album.name }}",
               "type": "string"
+            },
+            {
+              "id": "1e957dc1-3bce-4fcd-a511-1a83d609d713",
+              "name": "track.artists",
+              "value": "={{ $json.track.artists }}",
+              "type": "array"
             }
           ]
         },
@@ -258,35 +258,35 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1792,
-        112
+        -1040,
+        560
       ],
-      "id": "95075ae5-c0e9-49e1-a068-f65e305c2447",
+      "id": "1f384840-1d9c-49f6-9e50-23e2d09d05f3",
       "name": "Extract Track ID1"
     },
     {
       "parameters": {
         "chatId": "1226319359",
-        "text": "=Adicionadas {{ $('Compare the two Datasets').all().length }} tracks",
+        "text": "=Adicionadas {{ $json.length }} tracks:\n\n{{ $json.data }}",
         "additionalFields": {
           "appendAttribution": false,
-          "parse_mode": "MarkdownV2"
+          "parse_mode": "Markdown"
         }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3184,
-        -288
+        624,
+        160
       ],
-      "id": "dffe7334-820c-4796-a05e-00e1391cdeaa",
+      "id": "b4dad31f-0b5f-4c0a-a335-6a64d2a9e285",
       "name": "Send a text message",
       "webhookId": "31b36991-42f7-46a8-b3ec-5f3e9de2a92b",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "ZkFlWyDupkhZdr1q",
-          "name": "Telegram Spotify"
+          "id": "MCTqy8DF917cDCAV",
+          "name": "Telegram n8n chatbot"
         }
       }
     },
@@ -299,35 +299,35 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2912,
-        608
+        288,
+        1056
       ],
-      "id": "3f209006-ced2-4196-bf5a-164dd0639444",
+      "id": "1affe99b-c0e7-455e-b829-a4a9667994b9",
       "name": "Loop Over Items2"
     },
     {
       "parameters": {
         "chatId": "1226319359",
-        "text": "=Removidas {{ $('Compare the two Datasets').all().length }} tracks",
+        "text": "=Removidas {{ $json.length }} tracks:\n\n{{ $json.data }}",
         "additionalFields": {
           "appendAttribution": false,
-          "parse_mode": "MarkdownV2"
+          "parse_mode": "Markdown"
         }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3184,
-        592
+        624,
+        1040
       ],
-      "id": "8f160bb0-8cc4-419b-9f1f-2d557180d4f7",
+      "id": "35a8d55b-dbd4-407f-9873-84808d4b5fd0",
       "name": "Send a text message1",
       "webhookId": "30432e5e-9544-4dd0-adbc-53ff3c95c027",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "ZkFlWyDupkhZdr1q",
-          "name": "Telegram Spotify"
+          "id": "MCTqy8DF917cDCAV",
+          "name": "Telegram n8n chatbot"
         }
       }
     },
@@ -345,10 +345,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        288,
-        96
+        -2544,
+        544
       ],
-      "id": "5790bbbb-ff9e-47de-8f93-f6db43445fa2",
+      "id": "b5e2d887-c1dd-49b8-b85d-c1db1261b59a",
       "name": "Schedule Trigger"
     },
     {
@@ -362,10 +362,10 @@
       "type": "n8n-nodes-base.removeDuplicates",
       "typeVersion": 2,
       "position": [
-        2272,
-        32
+        -560,
+        480
       ],
-      "id": "6b8c0a35-526a-45dc-a4c6-c2ed54900247",
+      "id": "e6d3f955-9832-4ebc-a9e6-34e58c78dc8a",
       "name": "Remove Duplicates"
     },
     {
@@ -373,10 +373,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1872,
-        -176
+        -960,
+        272
       ],
-      "id": "505d9cb6-9f36-4a55-85f2-8de392925d71",
+      "id": "fdec420e-612a-4133-aa09-1be7be95eee3",
       "name": "Merge"
     },
     {
@@ -389,16 +389,16 @@
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        1584,
-        112
+        -1248,
+        560
       ],
-      "id": "54f34553-119f-47a5-99dc-27c15a74da6f",
+      "id": "b24699b0-92d5-4d49-b303-13176206e8e2",
       "name": "Get a playlist's tracks by URI or ID",
       "alwaysOutputData": true,
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
@@ -410,16 +410,16 @@
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        1520,
-        -272
+        -1312,
+        176
       ],
-      "id": "a06fcd6c-43c2-4d10-b5fd-f549306bcb2c",
+      "id": "3e94f537-38f2-4182-9935-c9120378047a",
       "name": "Get liked tracks1",
       "executeOnce": true,
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
@@ -440,16 +440,16 @@
               "type": "string"
             },
             {
-              "id": "1e957dc1-3bce-4fcd-a511-1a83d609d713",
-              "name": "track.artists[0].name",
-              "value": "={{ $json.track.artists[0].name }}",
-              "type": "string"
-            },
-            {
               "id": "24fce01e-6ce8-499e-8844-5a77698eab20",
               "name": "track.album.name",
               "value": "={{ $json.track.album.name }}",
               "type": "string"
+            },
+            {
+              "id": "1e957dc1-3bce-4fcd-a511-1a83d609d713",
+              "name": "track.artists",
+              "value": "={{ $json.track.artists }}",
+              "type": "array"
             }
           ]
         },
@@ -458,10 +458,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1680,
-        -272
+        -1152,
+        176
       ],
-      "id": "c2b5af2a-7bff-4667-9b2a-b64f47da4d8a",
+      "id": "7e999061-67ed-48c1-a89b-25d64264dd70",
       "name": "Extract Track ID2"
     },
     {
@@ -471,10 +471,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2912,
-        -272
+        288,
+        176
       ],
-      "id": "3fdfdaba-ef8b-41fb-add0-e8bcaff9a777",
+      "id": "0f9691ed-d794-48a2-b4e1-c968072d5910",
       "name": "Loop Over Items1"
     },
     {
@@ -514,10 +514,10 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        2432,
-        32
+        -400,
+        480
       ],
-      "id": "601ae436-3609-4eca-a1a5-3471f62380e1",
+      "id": "8b910ea7-9aec-47cf-b061-8f1d37ce405d",
       "name": "Filter"
     },
     {
@@ -528,11 +528,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1296,
-        0
+        -1536,
+        448
       ],
       "typeVersion": 1,
-      "id": "d26e5760-1d85-486b-bbaa-da8a12b511a5",
+      "id": "f24295ca-b499-4a34-a1f8-7017f5f1db42",
       "name": "Sticky Note"
     },
     {
@@ -544,11 +544,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
-        -384
+        -1392,
+        64
       ],
       "typeVersion": 1,
-      "id": "7451c984-bda4-4947-b303-0945666cddfe",
+      "id": "e7810291-0c82-4a17-9f83-849dcc381f7e",
       "name": "Sticky Note3"
     },
     {
@@ -560,11 +560,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1120,
-        416
+        -1712,
+        864
       ],
       "typeVersion": 1,
-      "id": "0a8d6d50-4579-41f2-b0c2-84d056000a7e",
+      "id": "f7710dc5-bd75-422e-abe8-c89f2e31983d",
       "name": "Sticky Note2"
     },
     {
@@ -576,11 +576,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2064,
-        -16
+        -768,
+        432
       ],
       "typeVersion": 1,
-      "id": "9732cdf9-a20d-4aac-8c78-0d5a92322b53",
+      "id": "cc1671d6-d1aa-44c5-8027-ddfb5a995443",
       "name": "Sticky Note4"
     },
     {
@@ -592,11 +592,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2832,
-        -448
+        192,
+        0
       ],
       "typeVersion": 1,
-      "id": "24a8d1d3-dfe4-4782-ba32-94ef2e1b1410",
+      "id": "2f795018-8546-4867-b86b-a4fda98e094b",
       "name": "Sticky Note5"
     },
     {
@@ -608,11 +608,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2832,
-        464
+        208,
+        912
       ],
       "typeVersion": 1,
-      "id": "f3c952a1-7fdb-45a7-b588-b13d9addddc1",
+      "id": "449d0fd5-5f43-4133-b576-0d36095a9fbe",
       "name": "Sticky Note6"
     },
     {
@@ -627,17 +627,17 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        752,
-        -272
+        -2080,
+        176
       ],
-      "id": "a5edddd7-6707-42da-99c4-6f695bb7ff4c",
+      "id": "385cafac-e505-40a1-ab6a-34ef7da2f5ec",
       "name": "Enviar mensagem de início de workflow",
       "webhookId": "6cf17ceb-fdca-451c-9395-1b0c23c81af3",
       "executeOnce": false,
       "credentials": {
         "telegramApi": {
-          "id": "ZkFlWyDupkhZdr1q",
-          "name": "Telegram Spotify"
+          "id": "MCTqy8DF917cDCAV",
+          "name": "Telegram n8n chatbot"
         }
       }
     },
@@ -645,7 +645,7 @@
       "parameters": {
         "operation": "sendAndWait",
         "chatId": "1226319359",
-        "message": "=Tem certeza de que deseja remover {{ $('Compare the two Datasets').all().length }} tracks?",
+        "message": "=Tem certeza de que deseja remover {{ $json.length }} tracks?\n\n{{ $json.data }}",
         "approvalOptions": {
           "values": {
             "approvalType": "double",
@@ -660,17 +660,17 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3248,
-        208
+        624,
+        640
       ],
-      "id": "818b606a-896a-4c13-aed6-e6f65472fd01",
+      "id": "20916753-71c9-473e-977a-7f0ad18674fa",
       "name": "Send message and wait for response",
       "webhookId": "cb1d6811-987d-42fc-9335-a087dad346e8",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "ZkFlWyDupkhZdr1q",
-          "name": "Telegram Spotify"
+          "id": "MCTqy8DF917cDCAV",
+          "name": "Telegram n8n chatbot"
         }
       }
     },
@@ -702,10 +702,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3456,
-        208
+        832,
+        640
       ],
-      "id": "56f9a16e-aea4-46cb-afe4-014566626e91",
+      "id": "24335147-67d8-4d90-975e-6dbec70f2021",
       "name": "If",
       "executeOnce": true
     },
@@ -721,17 +721,17 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3696,
-        96
+        1072,
+        528
       ],
-      "id": "bbaf1042-5ce5-48f1-abab-0f8b4742965b",
+      "id": "8e112063-a3df-4314-81b3-1e78c0ef6dc7",
       "name": "Send a text message2",
       "webhookId": "31b36991-42f7-46a8-b3ec-5f3e9de2a92b",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
-          "id": "ZkFlWyDupkhZdr1q",
-          "name": "Telegram Spotify"
+          "id": "MCTqy8DF917cDCAV",
+          "name": "Telegram n8n chatbot"
         }
       }
     },
@@ -742,10 +742,10 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        3696,
-        304
+        1072,
+        736
       ],
-      "id": "f8e5ef40-9c9b-4325-8abf-d6b64880265e",
+      "id": "2e894507-3112-40cb-8fc2-1edd11e33f1e",
       "name": "Stop and Error",
       "executeOnce": true
     },
@@ -784,34 +784,34 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2112,
-        32
+        -720,
+        480
       ],
-      "id": "c5efe741-6497-46da-8e00-784764af1fa8",
+      "id": "53ff1942-74d8-4eb9-9b30-cdaeca0602ba",
       "name": "Edit Fields"
     },
     {
       "parameters": {
         "resource": "playlist",
-        "id": "3vfDCGaXYBMdQf2p112arJ",
+        "id": "2PNnDnyjkpFMCqW7qelgGz",
         "trackID": "={{ $json.id }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        3184,
-        -144
+        464,
+        320
       ],
-      "id": "1d4ab564-33b4-44fe-911b-188e7db32c12",
+      "id": "f3f8e110-1994-497f-8791-ef691de756c1",
       "name": "Add track to Roleta Russa",
       "retryOnFail": true,
       "waitBetweenTries": 5000,
       "maxTries": 5,
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
@@ -819,61 +819,82 @@
       "parameters": {
         "resource": "playlist",
         "operation": "delete",
-        "id": "3vfDCGaXYBMdQf2p112arJ",
+        "id": "2PNnDnyjkpFMCqW7qelgGz",
         "trackID": "={{ $json.id }}"
       },
       "type": "n8n-nodes-base.spotify",
       "typeVersion": 1,
       "position": [
-        3184,
-        752
+        464,
+        1200
       ],
-      "id": "4e7c6ed7-794c-4878-9b84-21ada2daea66",
+      "id": "c81e0bac-5153-48d7-90b6-2ee1d59d1ca1",
       "name": "Remove track to Roleta Russa",
       "retryOnFail": true,
       "waitBetweenTries": 5000,
       "maxTries": 5,
       "credentials": {
         "spotifyOAuth2Api": {
-          "id": "McmF6suUUb2xY8Re",
-          "name": "Spotify account"
+          "id": "aBVcQt43eIWG3ux4",
+          "name": "Spotify Opus dashboard"
         }
       }
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "6c539517-69df-4128-9913-ff5ac1c24beb",
-              "leftValue": "={{ $('Compare the two Datasets').all().length }}",
-              "rightValue": 30,
-              "operator": {
-                "type": "number",
-                "operation": "gte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "jsCode": "const nameArray = [];\n\n// Assuming 'items' contains your data\nfor (const item of $('Compare the two Datasets').all()) {\n  if (item.json && item.json.name) {\n    nameArray.push(item.json.name);\n  }\n}\n\nnameArray.sort();\n\n// Join the array into a single string with desired separator\nreturn {\n  data: nameArray.join('\\n'),\n  length: nameArray.length,\n}"
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        2960,
-        240
+        464,
+        160
       ],
-      "id": "65e3bf48-d63e-4eb4-8c09-cf904025ab5d",
-      "name": "If more than 30 tracks to delete",
-      "alwaysOutputData": true,
-      "executeOnce": true
+      "id": "b206ab78-1f68-4e3d-9ad6-1a6b3c097cb2",
+      "name": "List track names"
+    },
+    {
+      "parameters": {
+        "jsCode": "const nameArray = [];\n\n// Assuming 'items' contains your data\nfor (const item of $('Compare the two Datasets').all()) {\n  if (item.json && item.json.name) {\n    nameArray.push(item.json.name);\n  }\n}\n\nnameArray.sort();\n\n// Join the array into a single string with desired separator\nreturn {\n  data: nameArray.join('\\n'),\n  length: nameArray.length,\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        1040
+      ],
+      "id": "eb1c99c8-e3eb-4a28-b4e6-2c4299e635a5",
+      "name": "List track names1"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {
+          "disableDotNotation": true
+        }
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        -1248,
+        976
+      ],
+      "id": "b78ee82a-0c62-4abc-ba0e-c97b4d6c7b5a",
+      "name": "Remove Duplicates1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const nameArray = [];\n\n// Assuming 'items' contains your data\nfor (const item of $('Compare the two Datasets').all()) {\n  if (item.json && item.json.name) {\n    nameArray.push(item.json.name);\n  }\n}\n\nnameArray.sort();\n\n// Join the array into a single string with desired separator\nreturn {\n  data: nameArray.join('\\n'),\n  length: nameArray.length,\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        640
+      ],
+      "id": "80a5fe51-4adf-42d2-b330-e28f96cd09b8",
+      "name": "List track names2"
     }
   ],
   "pinData": {},
@@ -891,7 +912,7 @@
         [],
         [
           {
-            "node": "If more than 30 tracks to delete",
+            "node": "List track names2",
             "type": "main",
             "index": 0
           },
@@ -974,9 +995,9 @@
       "main": [
         [
           {
-            "node": "Compare the two Datasets",
+            "node": "Remove Duplicates1",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -992,16 +1013,11 @@
         ]
       ]
     },
-    "Send a text message": {
-      "main": [
-        []
-      ]
-    },
     "Loop Over Items2": {
       "main": [
         [
           {
-            "node": "Send a text message1",
+            "node": "List track names1",
             "type": "main",
             "index": 0
           }
@@ -1095,7 +1111,7 @@
       "main": [
         [
           {
-            "node": "Send a text message",
+            "node": "List track names",
             "type": "main",
             "index": 0
           }
@@ -1118,11 +1134,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Enviar mensagem de início de workflow": {
-      "main": [
-        []
       ]
     },
     "Send message and wait for response": {
@@ -1187,7 +1198,40 @@
         ]
       ]
     },
-    "If more than 30 tracks to delete": {
+    "List track names": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List track names1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates1": {
+      "main": [
+        [
+          {
+            "node": "Compare the two Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "List track names2": {
       "main": [
         [
           {
@@ -1199,19 +1243,15 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
-    "executionOrder": "v1",
-    "timezone": "America/Sao_Paulo",
-    "callerPolicy": "workflowsFromSameOwner",
-    "availableInMCP": false,
-    "errorWorkflow": "pftiJxONmWBep93h"
+    "executionOrder": "v1"
   },
-  "versionId": "acb937b2-0f3b-4e80-a852-9cbd9403b8c4",
+  "versionId": "2481a08f-e9b4-4b0f-9643-5e706fc2f73b",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "56b4efc0d82a0fdc124a46951e101f2095a712c52ab1c1cc5592a872f7ea17dd"
+    "instanceId": "149e441531d53dd6afec8387bdebe91fbf5209e6865bb20f7cb8ec214b8f7080"
   },
-  "id": "lxcnhyYJECBvI4gq",
+  "id": "VV4xRmpRAqFaV8t4",
   "tags": []
 }
